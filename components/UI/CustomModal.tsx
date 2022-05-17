@@ -10,6 +10,7 @@ interface IModalProps {
 const CustomModal: React.FC<IModalProps> = ({ show, hideModal, children }) => {
 	return (
 		<Modal
+			size={"xl"}
 			show={show}
 			backdrop="static"
 			onHide={() => hideModal(false)}

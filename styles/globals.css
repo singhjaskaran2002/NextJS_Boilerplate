@@ -326,3 +326,13 @@ td {
 	text-align: right;
 	margin-bottom: 20px;
 }
+
+.product-form {
+	width: 100%;
+	text-align: center;
+	padding: 100px 0;
+}
+
+.modal-content {
+	min-height: 400px !important;
+}

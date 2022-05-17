@@ -2,7 +2,7 @@ import React from "react";
 
 const ProductForm = () => {
 	return (
-		<div>
+		<div className="product-form">
 			<h1>Add product form</h1>
 		</div>
 	);
