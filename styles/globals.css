@@ -113,14 +113,14 @@ form label {
 	color: rgb(24, 22, 22);
 }
 
-.btn-primary:hover {
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus {
 	color: #fff;
 	background-color: rgb(24, 22, 22);
 	transition: all 0.5s ease-out;
 }
 
-.btn-primary:active,
-.btn-primary:focus,
 .btn-primary:visited,
 .btn-primary:disabled,
 .btn-primary:focus-visible {
@@ -291,7 +291,8 @@ td {
 .search-box .search-button {
 	position: absolute;
 	top: -19px;
-	right: 1px;
+	width: 13%;
+	right: -9px;
 	border-radius: 0 15px 15px 0;
 	border: none;
 	border-left: 2px solid #eee;
@@ -316,7 +317,9 @@ td {
 
 .dialogue-box {
 	background-color: #fff;
+	width: 50%;
 	padding: 70px;
+	transform: translateX(50%);
 }
 
 .add-product-div {
