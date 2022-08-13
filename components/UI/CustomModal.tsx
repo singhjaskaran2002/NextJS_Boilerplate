@@ -5,9 +5,15 @@ interface IModalProps {
 	show: boolean;
 	hideModal: Function;
 	children: ReactNode;
+	heading: string;
 }
 
-const CustomModal: React.FC<IModalProps> = ({ show, hideModal, children }) => {
+const CustomModal: React.FC<IModalProps> = ({
+	show,
+	hideModal,
+	children,
+	heading,
+}) => {
 	return (
 		<Modal
 			size={"xl"}
@@ -17,7 +23,9 @@ const CustomModal: React.FC<IModalProps> = ({ show, hideModal, children }) => {
 			keyboard={false}
 			centered
 		>
-			<Modal.Header closeButton></Modal.Header>
+			<Modal.Header closeButton>
+				<h2>{heading}</h2>
+			</Modal.Header>
 			<Modal.Body>{children}</Modal.Body>
 		</Modal>
 	);

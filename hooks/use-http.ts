@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { setLoading } from "../store/reducers/commonSlice";
 import { httpMethods } from "../utils/constants";
 
-const SERVER_URL: string = process.env.SERVER_URL || "https://fakestoreapi.com";
+const SERVER_URL: string = process.env.SERVER_URL || "http://0.0.0.0:9000";
 
 interface RequestAgrs {
 	apiUrl: string;

@@ -1,4 +1,9 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
+/* @import "./pagiation.scss"; */
+@import "@fontsource/roboto/300.css";
+@import "@fontsource/roboto/400.css";
+@import "@fontsource/roboto/500.css";
+@import "@fontsource/roboto/700.css";
 
 html,
 body {
@@ -15,6 +20,10 @@ a {
 
 * {
 	box-sizing: border-box;
+}
+
+.cursor-pointer {
+	cursor: pointer;
 }
 
 .loginbtn-grp {
@@ -110,6 +119,7 @@ form label {
 	margin-right: 10px;
 	margin-left: 10px;
 	background-color: #fff;
+	border: 1px solid rgb(24, 22, 22);
 	color: rgb(24, 22, 22);
 }
 
@@ -269,8 +279,31 @@ div#dropdownMenu {
 	box-shadow: none !important;
 }
 
+.select-row {
+	display: flex;
+	width: 250px;
+	margin-right: 40px;
+}
+
+.page-control {
+	width: 80%;
+	margin-top: 30px;
+	border: 1px solid #ccc;
+	padding: 10px 0;
+	vertical-align: middle;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.select-row label {
+	width: 270px;
+	margin: auto;
+}
+
 td {
 	text-transform: capitalize;
+	font-size: 14px;
+	vertical-align: middle;
 }
 
 .search-box {
@@ -322,17 +355,62 @@ td {
 	transform: translateX(50%);
 }
 
-.add-product-div {
+.add-user-div {
 	text-align: right;
 	margin-bottom: 20px;
+}
+
+.add-user-div button {
+	margin-top: 1%;
+	width: 10%;
 }
 
 .product-form {
 	width: 100%;
 	text-align: center;
-	padding: 100px 0;
+	/* padding: 100px 0; */
 }
 
 .modal-content {
 	min-height: 400px !important;
+}
+
+.active-sort-arrow {
+	filter: brightness(0) !important;
+}
+
+.sort-arrow {
+	margin-left: 10px;
+	margin-top: -4px;
+	font-size: 14px;
+	cursor: pointer;
+	filter: brightness(5);
+}
+
+.sort-arrow-icons {
+	display: grid;
+	position: absolute;
+	top: -4px;
+	right: 0px;
+	padding: 4px 0px;
+}
+
+.sort-arrow-div {
+	display: grid;
+	position: absolute;
+	top: 2px;
+	right: -25px;
+}
+
+form {
+	padding: 20px 100px;
+}
+
+.button-group {
+	text-align: right;
+}
+
+.button-group button {
+	margin-top: 20px;
+	margin-left: 10px;
 }

@@ -1,8 +1,5 @@
 import axios, { AxiosRequestHeaders, AxiosResponse, Method } from "axios";
-import store from "../store";
 import { CustomType } from "./interfaces/custom-type.interface";
-
-const dispatch = store.dispatch;
 
 export const apiRequest = async (options: {
 	url: string;
@@ -11,7 +8,11 @@ export const apiRequest = async (options: {
 	data?: CustomType;
 	params?: CustomType;
 }): Promise<AxiosResponse> => {
-	return await axios({ method: "get", ...options });
+	return await axios({
+		method: "get",
+		baseURL: process.env.SERVER_URL,
+		...options,
+	});
 };
 
 // request interceptor

@@ -4,6 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Toast from "../components/UI/Toast";
 import store from "../store/index";
 import "../styles/globals.css";
+import "../styles/pagination.scss";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
 	return (

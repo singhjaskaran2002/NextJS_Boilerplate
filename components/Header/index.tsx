@@ -19,6 +19,7 @@ const Header: React.FC = () => {
 
 	const logoutUser = async () => {
 		await dispatch(userLogout());
+		localStorage.clear();
 		notify("success", messages.auth.LOGGED_OUT);
 		router.replace({ pathname: appRoutes.LOGIN });
 	};
@@ -49,6 +50,7 @@ const Header: React.FC = () => {
 				successButtonLabel="Logout"
 			/>
 			<Navbar
+				data-testid="testid-header"
 				className="nav-top"
 				collapseOnSelect
 				expand="lg"
@@ -80,7 +82,7 @@ const Header: React.FC = () => {
 										className="nav-profile-img"
 										src={
 											loggedUser?.image ||
-											"https://cdn-icons-png.flaticon.com/512/149/149071.png"
+											"/images/user-logo.png"
 										}
 									/>
 								</a>

@@ -3,8 +3,9 @@ import { SpinnerCircular } from "spinners-react";
 
 const Loader = () => {
 	return (
-		<div className="loaderDiv">
+		<div className="loaderDiv" data-testid="testid-loader-div">
 			<SpinnerCircular
+				data-testid="testid-spinner"
 				className="loader"
 				size={90}
 				thickness={180}

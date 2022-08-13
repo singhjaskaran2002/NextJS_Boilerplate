@@ -15,6 +15,7 @@ const SearchBox: React.FC<ISearchBoxProps> = ({ placeholder, onClick }) => {
 				className="form-control"
 				placeholder={placeholder}
 				aria-label=""
+				max="100"
 				aria-describedby="basic-addon1"
 			/>
 			<Button

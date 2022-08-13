@@ -1,5 +1,5 @@
-import React from 'react';
-import LoginUser from '../components/LoginUser';
+import React from "react";
+import LoginUser from "../components/LoginUser";
 
 function Login() {
 	return <LoginUser />;

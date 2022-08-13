@@ -12,7 +12,7 @@ import Button from "../UI/FormUI/Button";
 import ButtonGroup from "../UI/FormUI/ButtonGroup";
 import TextField from "../UI/FormUI/TextField";
 
-interface LoginUserState {
+interface ILoginUserState {
 	email: string;
 	password: string;
 }
@@ -22,11 +22,11 @@ const LoginUser: React.FC = () => {
 
 	const dispatch = useDispatch();
 
-	const initialValues: LoginUserState = { email: "", password: "" };
+	const initialValues: ILoginUserState = { email: "", password: "" };
 
 	const loading = useSelector((state: RootState) => state.common.loading);
 
-	const formik: FormikProps<LoginUserState> = useFormik({
+	const formik: FormikProps<ILoginUserState> = useFormik({
 		initialValues,
 		validationSchema: Yup.object({
 			email: Yup.string()
@@ -45,6 +45,7 @@ const LoginUser: React.FC = () => {
 					token: "token",
 				})
 			);
+			localStorage.setItem("access-token", values.email);
 			router.replace(appRoutes.DASHBOARD);
 			return;
 		},

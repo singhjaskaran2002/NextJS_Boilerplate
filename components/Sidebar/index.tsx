@@ -31,19 +31,17 @@ const Sidebar: NextPage = () => {
 			title: "Dashboard",
 			icon: <i className="fa-solid fa-chart-line sidemenu-icon"></i>,
 			href: appRoutes.DASHBOARD,
-			className:
-				route === appRoutes.DASHBOARD
-					? activeSideMenuClass
-					: sideMenuClass,
+			className: route.includes(appRoutes.DASHBOARD)
+				? activeSideMenuClass
+				: sideMenuClass,
 		},
 		{
-			title: "Products",
-			href: appRoutes.PRODUCTS,
-			icon: <i className="fa-solid fa-box sidemenu-icon"></i>,
-			className:
-				route === appRoutes.PRODUCTS
-					? activeSideMenuClass
-					: sideMenuClass,
+			title: "Users",
+			href: appRoutes.USERS,
+			icon: <i className="fas fa-users sidemenu-icon"></i>,
+			className: route.includes(appRoutes.USERS)
+				? activeSideMenuClass
+				: sideMenuClass,
 		},
 	];
 	return (

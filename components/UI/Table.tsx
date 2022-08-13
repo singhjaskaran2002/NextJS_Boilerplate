@@ -1,129 +1,149 @@
-import { useRouter } from "next/router";
-import React, { Fragment, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
-import Dialogue from "./Dialogue";
+import React, { useState } from "react";
+import { usePagination, useSortBy, useTable } from "react-table";
+import { defaults } from "../../utils/constants";
+import { IHeader } from "../../utils/interfaces/ReactTableInterfaces/table-header.interface";
+import Pagination from "./Pagination";
 
 interface ITableProps {
-	headings: Array<string>;
-	rows: Array<any>;
-	rowKeys: Array<string>;
-	DeleteAction?: any;
-	deletionKey?: string;
-	rowNavigation: boolean;
-	detailsPagePath?: any;
-	navigatorKey?: any;
-	// can add more actions if required
+	columns: Array<IHeader>;
+	data: Array<any>;
+	count: number;
+	pageNumber: number;
+	limit: number;
+	onPageChange: any;
+	onLimitChange: any;
+	onSort?: Function;
+	columnsWithoutSorting: Array<string>;
 }
 
 const Table: React.FC<ITableProps> = ({
-	headings,
-	rows,
-	rowKeys,
-	DeleteAction,
-	deletionKey,
-	detailsPagePath,
-	navigatorKey,
-	rowNavigation,
+	columns,
+	data,
+	count,
+	pageNumber,
+	onPageChange,
+	onLimitChange,
+	onSort,
+	limit,
+	columnsWithoutSorting,
 }) => {
-	const imageKeys = ["image"];
+	const { getTableProps, getTableBodyProps, headerGroups, prepareRow, page } =
+		useTable(
+			{
+				columns,
+				data,
+				initialState: { pageIndex: 0, pageSize: 10 },
+				manualPagination: true,
+				manualSortBy: true,
+			},
+			useSortBy,
+			usePagination
+		);
 
-	const [showDialogue, setShowDialogue] = useState<boolean>(false);
-	const [itemToDelete, setItemToDelete] = useState<number | string>("");
-
-	const loading = useSelector((state: RootState) => state.common.loading);
-
-	const router = useRouter();
-
-	const deleteButtonHandler = (key: number | string) => {
-		setShowDialogue(true);
-		setItemToDelete(key);
-	};
-
-	useEffect(() => {
-		if (!loading) {
-			setShowDialogue(false);
-		}
-	}, [loading]);
-
-	const itemDetailsNavigationHandler = (key: number | string) => {
-		const path = detailsPagePath?.replace(navigatorKey, key);
-		router.push(path);
-	};
+	const [sortKey, setSortKey] = useState<string>(defaults.SORT_KEY);
+	const [sortOrder, setSortOrder] = useState<string>(defaults.SORT_ORDER);
 
 	return (
 		<>
-			<Dialogue
-				title="Are you sure ?"
-				show={showDialogue}
-				successButtonHandler={() => DeleteAction(itemToDelete)}
-				successButtonLabel="Yes, delete it !"
-				cancelButtonHandler={() => setShowDialogue(false)}
-				cancelButtonLabel="Cancel"
-			/>
-			<table className="table table-hover">
+			<table
+				data-testid="testid-react-table"
+				className="table table-hover"
+				{...getTableProps()}
+			>
 				<thead>
-					<tr>
-						{headings.map((item: string, index: number) => (
-							<th scope="col" key={index}>
-								{item}
-							</th>
-						))}
-					</tr>
-				</thead>
-				<tbody>
-					{rows.map((item: any, rowIndex: number) => (
-						<tr
-							key={rowIndex}
-							style={{
-								cursor: rowNavigation ? "pointer" : "inherit",
-							}}
-							onClick={() => {
-								if (rowNavigation) {
-									itemDetailsNavigationHandler(item.id);
-								} else {
-									return;
-								}
-							}}
-						>
-							{rowKeys.map((key: string, index: number) => (
-								<Fragment key={index}>
-									{key === "id" && <th>{item[key]}</th>}
-									{imageKeys.includes(key) && (
-										<td>
-											<img
-												width={50}
-												src={item[`${key}`]}
-											/>
-										</td>
-									)}
-									{!imageKeys.includes(key) && key !== "id" && (
-										<td>
-											{key === "price" && "$"}
-											{item[key]}
-										</td>
-									)}
-								</Fragment>
-							))}
-							<td>
-								<i
-									className="fa-solid fa-trash table-action-btn"
-									onClick={(e: any) => {
-										e.stopPropagation();
-										if (deletionKey) {
-											deleteButtonHandler(
-												item[deletionKey]
-											);
-										} else {
-											return;
-										}
-									}}
-								></i>
-							</td>
+					{headerGroups.map((headerGroup: any) => (
+						<tr {...headerGroup.getHeaderGroupProps()}>
+							{headerGroup.headers.map(
+								(column: any, index: number) => (
+									<th key={index}>
+										<span className="position-relative">
+											{column.render("Header")}
+											<div className="sort-arrow-div">
+												<span>
+													{onSort &&
+														!columnsWithoutSorting.includes(
+															column.id
+														) && (
+															<span className="sort-arrow-icons">
+																<i
+																	className={
+																		sortOrder ===
+																			"ASC" &&
+																		column.id ===
+																			sortKey
+																			? "fa-solid fa-angle-up sort-arrow active-sort-arrow"
+																			: "fa-solid fa-angle-up sort-arrow"
+																	}
+																	onClick={() => {
+																		onSort(
+																			column.id,
+																			"ASC"
+																		);
+																		setSortKey(
+																			column.id
+																		);
+																		setSortOrder(
+																			"ASC"
+																		);
+																	}}
+																/>
+																<i
+																	className={
+																		sortOrder ===
+																			"DESC" &&
+																		column.id ===
+																			sortKey
+																			? "fa-solid fa-angle-down sort-arrow active-sort-arrow"
+																			: "fa-solid fa-angle-down sort-arrow"
+																	}
+																	onClick={() => {
+																		onSort(
+																			column.id,
+																			"DESC"
+																		);
+																		setSortKey(
+																			column.id
+																		);
+																		setSortOrder(
+																			"DESC"
+																		);
+																	}}
+																/>
+															</span>
+														)}
+												</span>
+											</div>
+										</span>
+									</th>
+								)
+							)}
 						</tr>
 					))}
+				</thead>
+				<tbody {...getTableBodyProps()}>
+					{page.map((row: any, index: number) => {
+						prepareRow(row);
+						return (
+							<tr key={index} {...row.getRowProps()}>
+								{row.cells.map((cell: any, index: number) => (
+									<td key={index} {...cell.getCellProps()}>
+										{cell.render("Cell")}
+									</td>
+								))}
+							</tr>
+						);
+					})}
 				</tbody>
 			</table>
+
+			<Pagination
+				className="pagination-bar"
+				currentPage={pageNumber}
+				totalCount={count}
+				pageSize={limit}
+				onPageChange={(page: number) => onPageChange(page)}
+				onLimitChange={(limit: number) => onLimitChange(limit)}
+			/>
 		</>
 	);
 };

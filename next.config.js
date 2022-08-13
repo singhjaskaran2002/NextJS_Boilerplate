@@ -2,16 +2,20 @@
 
 const nextConfig = {
 	reactStrictMode: true,
-	SERVER_URL: "https://fakestoreapi.com",
-	env: {},
+	env: {
+		SERVER_URL: "http://0.0.0.0:8000",
+	},
 	async redirects() {
 		return [
 			{
-				source: '/',
-				destination: '/login',
+				source: "/",
+				destination: "/login",
 				permanent: false,
 			},
 		];
+	},
+	experimental: {
+		outputStandalone: true,
 	},
 };
 
